@@ -63,12 +63,12 @@ st.markdown(
     """
     <style>
     .stApp { background: linear-gradient(180deg, #eff9ff 0%, #f3fbf6 100%); color: #183b4e; }
-    .block-container { max-width: 780px; padding-top: 2rem; padding-bottom: 3rem; }
+    .block-container { max-width: 780px; padding-top: 4rem !important; padding-bottom: 3rem; }
     h1, h2, h3 { color: #176b87 !important; }
     .subtitle { text-align: center; color: #347a74; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
     .speech { position: relative; background: white; border: 3px solid #73b8b1; border-radius: 18px; padding: 1rem; font-weight: 700; color: #205c61; box-shadow: 0 4px 12px #1c65751c; }
     .speech:before { content: ""; position: absolute; left: -15px; top: 45%; border-width: 10px 15px 10px 0; border-style: solid; border-color: transparent #73b8b1 transparent transparent; }
-    div.stButton > button { width: 100%; min-height: 3.4rem; border: 0; border-radius: 14px; background: #d84949; color: white; font-size: 1.15rem; font-weight: 800; box-shadow: 0 4px 0 #a72e2e; }
+    div.stButton > button { width: 100%; min-height: 64px; border: 0; border-radius: 14px; background: #d84949; color: white; font-size: 1.2rem; font-weight: 800; box-shadow: 0 4px 0 #a72e2e; }
     div.stButton > button:hover { background: #c83d3d; color: white; border: 0; }
     div[data-testid="stRadio"] { background: #ffffffcc; border: 1px solid #cce7e3; border-radius: 14px; padding: .8rem 1rem; margin-bottom: .7rem; }
     .result-card { background: white; border: 2px solid #a6d8d0; border-radius: 18px; padding: 1.3rem; margin: 1rem 0; box-shadow: 0 6px 18px #1c65751a; }
@@ -76,7 +76,7 @@ st.markdown(
     .score strong { display: block; color: #d84949; font-size: 3rem; line-height: 1.1; }
     .type-name { text-align: center; font-size: 1.7rem; font-weight: 800; color: #176b87; margin: .6rem 0; }
     .disclaimer { background: #e9f3f5; border-radius: 10px; padding: .8rem; font-size: .85rem; color: #526b73; margin: 1.2rem 0; }
-    @media (max-width: 600px) { .block-container { padding: 1rem 1rem 2rem; } h1 { font-size: 2rem !important; } .speech { padding: .7rem; font-size: .9rem; } }
+    @media (max-width: 600px) { .block-container { padding: 3rem 1rem 2rem !important; } h1 { font-size: 2rem !important; } .speech { padding: .7rem; font-size: .9rem; } }
     </style>
     """,
     unsafe_allow_html=True,
@@ -90,7 +90,7 @@ if st.session_state.page == "intro":
     st.markdown('<div class="subtitle">10問でわかるあなたの投資スタイル</div>', unsafe_allow_html=True)
     show_guide("guide_intro2.png", "10問でわかるあなたの投資スタイル")
     st.write("")
-    if st.button("診断をはじめる", type="primary"):
+    if st.button("診断をはじめる", type="primary", use_container_width=True):
         go_to("questions")
 
 elif st.session_state.page == "questions":
@@ -131,7 +131,6 @@ else:
         values = [0.0001, 99.9999]
     ax.pie(values, colors=["#45a99a", "#dcefed"], startangle=90, counterclock=False, wedgeprops={"edgecolor": "white", "linewidth": 3})
     ax.text(0, 0.08, f"{tolerance}%", ha="center", va="center", fontsize=38, fontweight="bold", color="#176b87")
-    ax.text(0, -0.18, "リスク許容度", ha="center", va="center", fontsize=15, color="#347a74")
     ax.axis("equal")
     fig.patch.set_alpha(0)
     st.pyplot(fig, use_container_width=True)
@@ -150,7 +149,7 @@ else:
         """,
         unsafe_allow_html=True,
     )
-    if st.button("もう一度診断する", type="primary"):
+    if st.button("もう一度診断する", type="primary", use_container_width=True):
         for i in range(10):
             st.session_state.pop(f"answer_{i}", None)
         st.session_state.pop("result", None)

@@ -62,7 +62,7 @@ st.set_page_config(page_title="リスク許容度診断", page_icon="📊", layo
 st.markdown(
     """
     <style>
-    .stApp { background: linear-gradient(180deg, #eff9ff 0%, #f3fbf6 100%); color: #183b4e; }
+    .stApp { background: linear-gradient(180deg, #fffaf0 0%, #fff3d6 100%); color: #183b4e; }
     .block-container { max-width: 780px; padding-top: 4rem !important; padding-bottom: 3rem; }
     h1, h2, h3 { color: #176b87 !important; }
     .subtitle { text-align: center; color: #347a74; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
@@ -87,7 +87,6 @@ if "page" not in st.session_state:
 
 if st.session_state.page == "intro":
     st.title("リスク許容度診断")
-    st.markdown('<div class="subtitle">10問でわかるあなたの投資スタイル</div>', unsafe_allow_html=True)
     show_guide("guide_intro2.png", "10問でわかるあなたの投資スタイル")
     st.write("")
     if st.button("診断をはじめる", type="primary", use_container_width=True):

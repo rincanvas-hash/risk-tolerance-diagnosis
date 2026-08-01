@@ -13,7 +13,7 @@ from playwright.sync_api import sync_playwright
 # ここに自分のStreamlitアプリのURLを追加していく（増えたら行を足すだけ）
 APP_URLS = [
     "https://risk-tolerance-diagnosis.streamlit.app",
-    "https://rin-nisa-lifeplan-test.streamlit.app", 
+    "https://rin-nisa-lifeplan-test.streamlit.app",
 ]
 
 WAKE_BUTTON_TEXTS = [
@@ -26,25 +26,35 @@ def wake_app(playwright, url: str) -> None:
     browser = playwright.chromium.launch()
     page = browser.new_page()
     print(f"[access] {url}")
-    page.goto(url, timeout=30000, wait_until="domcontentloaded")
 
-    # スリープ画面が出ていればボタンを探してクリックする
+    # JSでの描画が終わるまでしっかり待つ
+    page.goto(url, timeout=45000, wait_until="networkidle")
+    # スリープ画面の描画が少し遅れることがあるので、念のため追加で待つ
+    page.wait_for_timeout(5000)
+
     woke = False
     for text in WAKE_BUTTON_TEXTS:
         try:
             button = page.get_by_text(text, exact=False)
-            if button.count() > 0:
-                button.first.click(timeout=5000)
-                print(f"[wake] clicked wake button on {url}")
-                woke = True
-                # アプリが起動し切るまで少し待つ
-                page.wait_for_timeout(15000)
-                break
-        except Exception:
+            button.wait_for(state="visible", timeout=8000)
+            button.first.click(timeout=8000, force=True)
+            print(f"[wake] clicked wake button on {url}")
+            woke = True
+            # アプリが起動し切るまでしっかり待つ
+            page.wait_for_timeout(25000)
+            break
+        except Exception as e:
+            print(f"[debug] button '{text}' not found or click failed: {e}")
             continue
 
     if not woke:
-        print(f"[ok] {url} was already awake (or no button found)")
+        print(f"[ok] {url} was already awake (no wake button found)")
+
+    # 結果確認用に、最終的なページのタイトルを出力しておく
+    try:
+        print(f"[result] page title after visit: {page.title()}")
+    except Exception:
+        pass
 
     browser.close()
 
@@ -60,3 +70,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+  

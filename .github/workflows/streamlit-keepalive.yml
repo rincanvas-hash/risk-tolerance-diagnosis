@@ -1,0 +1,30 @@
+name: Streamlit Keepalive
+
+on:
+  schedule:
+    # 6時間ごとに実行（UTC基準）。12時間スリープの前に必ず1回は起こしに行く
+    - cron: '0 */6 * * *'
+  workflow_dispatch: {}
+    # ↑ これがあると、GitHubの画面から手動で「今すぐ実行」もできる
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: Wake up Streamlit apps
+        run: python keepalive.py
+

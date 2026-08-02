@@ -14,6 +14,7 @@ from playwright.sync_api import sync_playwright
 APP_URLS = [
     "https://risk-tolerance-diagnosis.streamlit.app",
     "https://rin-nisa-lifeplan-test.streamlit.app",
+    "https://new-nisa-quiz.streamlit.app",
 ]
 
 WAKE_BUTTON_TEXTS = [

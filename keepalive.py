@@ -16,6 +16,7 @@ APP_URLS = [
     "https://rin-nisa-lifeplan-test.streamlit.app",
     "https://new-nisa-quiz.streamlit.app",
     "https://stock-proverb-quiz.streamlit.app",
+    "https://tsumitate-mirai-simulator.streamlit.app",
 ]
 
 WAKE_BUTTON_TEXTS = [
